@@ -1,0 +1,32 @@
+<header>
+  <div class="regle">
+    <!-- logo  -->
+    <div class="logo">
+      <img src="../../../assets/images/logo.png" alt="">
+    </div>
+    <!-- barre de recherche  -->
+    <div class="recherche" >
+        <input type="text" class="searchInp" placeholder="Recherche..." />
+        <button type="submit" class="searchButton">
+          <img src="../../../assets/images/rech.png" alt="">
+        </button>
+    </div>
+    <!-- notification  -->
+    <div class="notification">
+      <img src="../../../assets/images/noti.png" alt="">
+    </div>
+
+    <!-- bouton ajout  -->
+
+    <div class="ajout">
+      <button class="Ajouter"  (click)="toggleDropdown()">Ajouter +</button>
+
+      <div *ngIf="showDropdown" class="dropdown">
+        <button (click)="handleOption1()">Restaurant</button>
+        <button (click)="handleOption2()">Admin</button>
+        <button (click)="handleOption3()">Information</button>
+      </div>
+    </div>
+  </div>
+</header>
+

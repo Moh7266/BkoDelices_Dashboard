@@ -1,0 +1,97 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body{
+  width: 100%;
+  height: auto;
+  background-image: linear-gradient(#ff8000a0,#FFFFFF);
+  display: flex;
+  align-items: center;
+  padding-top: 2vh;
+}
+.gauche{
+  width: 50%;
+  margin-right: 5em;
+}
+.droite
+{
+  box-shadow: 0px 0px 5px 1px #888888;
+  border-radius: 15px;
+  width: 30%;
+  height: 85vh;
+  margin-left: 5em;
+  background-color: #ffffff24;
+  text-align: center;
+}
+.food img{
+  width: 20em;
+  position: relative;
+  bottom: 0;
+  left: O;
+}
+.logo img{
+  width: 35vw;
+  margin-left: 10em;
+  margin-top: 7em;
+}
+.droite p{
+ font-size: x-large;
+}
+.droite img{
+  width: 7em;
+}
+.first{
+  margin-bottom: 2em;
+  margin-top: 1em;
+}
+.label{
+  color:#888888;
+  margin-left: -12em;
+
+}
+.label1{
+  color:#888888;
+  margin-left: -9em;
+
+}
+#identifient,#passe{
+  width: 65%;
+  height: 1.8em;
+  border-radius: 8px;
+  border: none;
+  background-color: #cbcbcb92;
+  outline: none;
+  padding-left: 1em;
+}
+.second{
+  margin-bottom: 1.2em;
+  /* margin-top: 1em; */
+}
+form span{
+  color: #888888;
+  margin-left: 9em;
+}
+#connexion{
+  width: 35%;
+  border-radius: 6px;
+  border: none;
+  background-color: #ff8000;
+  color: #fff;
+  font-size: 1.2em;
+  margin-bottom: 0.5em;
+}
+.ou{
+  color: #888888;
+  margin-top: -0.1em;
+  margin-bottom: 0.1px;
+}
+.para img{
+  width: 0.6em;
+}
+.para{
+  margin-top: -0.1em;
+  color: #6900B0;
+
+}

@@ -1,0 +1,32 @@
+<body>
+  <div class="gauche">
+    <div class="logo">
+      <img src="../../../assets/images/logo.png" alt="">
+    </div>
+    <div class="food">
+      <img src="../../../assets/images/Groupe.png" alt="">
+    </div>
+  </div>
+  <div class="droite">
+    <p>Connexion</p>
+    <img src="../../../assets/images/couteau.png" alt="">
+    <div class="forme">
+      <form>
+        <div class="first">
+          <label for="identifient" class="label">Identifient</label><br>
+          <input type="text" name="identifient" id="identifient" [(ngModel)]="email">
+        </div>
+        <div class="second">
+          <label for="passe" class="label1">Votre mot de passe</label><br>
+          <input type="password" name="passe" id="passe" [(ngModel)]="passe"><br>
+          <span>Mot de passe oublié</span>
+        </div>
+        <input type="submit" name="connexion" id="connexion" value="Se connecter" (click)="login()">
+        <p class="ou">Ou</p>
+        <p class="para" style="font-size: medium;">Se connecter avec <img src="../../../assets/images/google.png" alt=""></p>
+
+      </form>
+    </div>
+
+  </div>
+</body>

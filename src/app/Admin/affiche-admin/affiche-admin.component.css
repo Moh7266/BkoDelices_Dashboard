@@ -1,0 +1,128 @@
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+.principal{
+  display: flex;
+  width: 100%;
+  height: auto;
+  justify-content: space-between;
+
+}
+.menu{
+  width: 23%;
+  padding: auto;
+  padding-bottom: 1em;
+  text-align: center;
+  background-color: #FFF;
+  height: auto;
+  border-top-left-radius: 15px;
+  /* border-top-right-radius: 15px; */
+  box-shadow: 0px 0px 5px 1px #888888;
+
+}
+.left{
+  /* border: 1px solid black; */
+  width: 70%;
+  height: 100vh;
+}
+
+.droite{
+  border-top-right-radius: 15px;
+  border-top-left-radius: 15px;
+  box-shadow: 0px 0px 5px 1px #888888;
+  width: 25%;
+  text-align: center;
+  padding: 0.5em;
+
+}
+.upbar{
+  width: 98%;
+  height: 15vh;
+  box-shadow: 0px 0px 5px 1px #888888;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+  text-align: center;
+  color: #ff8000;
+  padding-top: 1.5em;
+}
+.afiche{
+  /* border: 1px solid black; */
+  display: grid;
+  grid-template-columns: auto auto auto;
+  /* background-color: #2196F3; */
+  /* padding: 10px; */
+  width: 96%;
+  height: 75vh ;
+  margin-top: 11vh;
+  margin-left: 3vw;
+}
+.detail{
+  text-align: center;
+}
+.carte{
+  /* border: 1px solid black; */
+
+  width: 75%;
+  /* height: 32vh; */
+  margin-bottom: 1em;
+  border-radius: 15px;
+  box-shadow: 0px 0px 3px 0px #888888;
+  text-align: center;
+
+}
+.image img{
+  width: 85%;
+  margin-top: 0.1em;
+}
+.menu .profil img{
+  width: 7em;
+  border-radius: 50%;
+  border: 2px solid #ff8000;
+  margin-top: 0.2em;
+}
+.menu .profil{
+ color: #ff8000;
+ margin-bottom: 0.5em;
+}
+.menu .trait{
+ width: 50%;
+ border: 0.1px solid;
+ margin:auto;
+}
+.option{
+   display: flex;
+   justify-content: space-between;
+   padding-left: 1em;
+   padding-right: 1em;
+   color: #ff8000;
+   font-size: large;
+   margin-top: 1em;
+}
+.option .option1 img{
+  text-align: center;
+  width: 5em;
+}
+.option .option2 img{
+  width: 5em;
+  text-align: center;
+
+}
+.option .option1,.option2{
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px 1px #888888;
+  padding: 0.3em;
+  text-align: center;
+  height: 6.7em;
+  width: 6.7em;
+}
+.option .option1:hover,.option2:hover{
+  background-color: #8888884b;
+  cursor: pointer;
+}
+.centre{
+  width: 55%;
+  margin-left: -1%;
+
+}
