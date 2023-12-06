@@ -10,26 +10,44 @@ export class LoginComponent implements OnInit {
 
   email:string="";
   passe:string="";
-  
+  errorMessage: string = "";
+
+
 
   constructor(private authentification:AuthentificationService){}
 
   ngOnInit(): void {}
 
-  login(){
-    if(this.email===""){
-      alert("Entrez votre email");
-      return;
-    }
-    if(this.passe===""){
-      alert("Entrez votre mot de passe");
-      return;
-    }
+  async login() {
+    try {
+      if (this.email === "") {
+        this.errorMessage = "Entrez votre email";
+        alert(this.errorMessage);
+        return;
+      }
+      if (this.passe === "") {
+        this.errorMessage = "Entrez votre mot de passe";
+        alert(this.errorMessage);
 
-    this.authentification.login(this.email,this.passe);
+        return;
+      }
 
-    this.email="";
-    this.passe="";
+      // Réinitialiser le message d'erreur à chaque tentative de connexion
+      this.errorMessage = "";
+
+      // Appeler la méthode de connexion du service
+      await this.authentification.login(this.email, this.passe);
+
+      // Réinitialiser les champs d'entrée
+      this.email = "";
+      this.passe = "";
+
+    } catch (error) {
+      console.error('Erreur lors de la connexion :', error);
+      this.errorMessage ='Veuillez verifier les données saissi';
+      alert(this.errorMessage);
+
+    }
   }
 
 }

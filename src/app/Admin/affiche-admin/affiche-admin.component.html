@@ -5,65 +5,40 @@
 <div class="principal">
   <div class="menu" style="z-index: 6;">
     <div class="profil">
-      <img src="../../../assets/images/profil (2).png" alt="">
-      <h3>Nom complet de Supper-Admin</h3>
+      <img [src]="adminInfo?.imageUrl">
+      <h3>{{adminInfo?.nom}}</h3>
     </div>
     <div class="trait"></div>
     <div class="onglets">
       <div class="option">
-        <div class="option1">
+        <div class="option1" style="background-color: #d5d5d5;">
           <img src="../../../assets/images/acceuil.png" alt="">
-          <h5>Acceuil</h5>
+          <h5>Restaurants</h5>
         </div>
         <div class="option2">
           <img src="../../../assets/images/profil (2).png" alt="">
-          <h5>Supper-Admin</h5>
+          <h5 style="margin-left: 1.8em;">Supper-Admin</h5>
         </div>
+
       </div>
 
       <div class="option">
-        <div class="option1">
-          <img src="../../../assets/images/menu.png" alt="">
-          <h5>Menus</h5>
-        </div>
-        <div class="option2">
-          <img src="../../../assets/images/plat.png" alt="">
-          <h5>Types plats</h5>
-        </div>
-      </div>
-
-      <div class="option">
-        <div class="option1">
-          <img src="../../../assets/images/1262762.png" alt="">
-          <h5>Plats</h5>
-        </div>
         <div class="option2">
           <img src="../../../assets/images/sta.png" alt="">
           <h5>Statistiques</h5>
         </div>
-      </div>
 
-      <!-- <div class="option">
-        <div class="option1">
-          <img src="../../../assets/images/acceuil.png" alt="">
-          <h4>Acceuil</h4>
-        </div>
-        <div class="option2">
-          <img src="../../../assets/images/acceuil.png" alt="">
-          <h4>Acceuil</h4>
-        </div>
-      </div> -->
-
-      <div class="option">
         <div class="option1">
           <img src="../../../assets/images/tel.png" alt="">
-          <h4>Contacts</h4>
+          <h5>Contacts</h5>
         </div>
-        <!-- <div class="option2">
-          <img src="../../../assets/images/acceuil.png" alt="">
-          <h4>Acceuil</h4>
-        </div> -->
       </div>
+
+      <div class="deconnexion">
+        <button (click)="onLogout()">Déconnexion</button>
+      </div>
+
+
 
     </div>
   </div>
@@ -76,10 +51,10 @@
 <!-- Les cartes  -->
     <div class="afiche" >
     <!--  -->
-      <div class="carte" *ngFor=" let data of SupAdmin ">
+      <div class="carte" *ngFor=" let data of SupAdmin " (click)="showDetails(data)">
         <div class="image">
           <!-- recuperer l'image dans firestorage et le mettre ici -->
-          <img [src]="data.fileInput" alt="profil">
+          <img [src]="data.imageUrl" alt="profil">
         </div>
         <div class="titre">
           <h3>{{data.nom}}</h3>
@@ -94,9 +69,29 @@
   <div class="droite">
     <div class="detail">
       <h1>
-      Plus de details
+      Details du Supper-Admin
       </h1>
       <hr><hr><hr>
+
+      <div class="detailA" *ngIf="Administrateur">
+        <div class="datailimg">
+        <img [src]="Administrateur.imageUrl" alt="image du restaurant">
+
+        </div>
+        <h1>{{Administrateur.nom}}</h1>
+        <hr><hr>
+        <h2>Adresse:</h2>
+        <h3>{{Administrateur.adresse}}</h3>
+        <h2>Téléphone: </h2>
+        <h3>{{Administrateur.telephone}}</h3>
+        <h2>Email:</h2>
+        <h3>{{Administrateur.email}}</h3>
+        <div class="action">
+        <button (click)="deleteAdmin(Administrateur.id)" style="background-color: red;">Supprimer</button>
+        <button style="background-color: #ff8000;">Modifier</button>
+        </div>
+
+      </div>
     </div>
     <div>
 

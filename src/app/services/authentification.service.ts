@@ -15,18 +15,10 @@ export class AuthentificationService {
     this.currentUser$= this.fireAuth.authState;
   }
 
-
-
-
-
-
   //methode connexion
-  async login(email: string, password: string) {
+  async login(email: string, password: string): Promise<void> {
     try {
-      const userCredential = await this.fireAuth.signInWithEmailAndPassword(
-        email,
-        password
-      );
+      const userCredential = await this.fireAuth.signInWithEmailAndPassword(email, password);
       const user = userCredential.user;
 
       // Récupérer les informations du compte
@@ -36,36 +28,30 @@ export class AuthentificationService {
       if (userDoc1.exists()) {
         this.router.navigate(['/afficheRestaurant']);
       } else if (userDoc2.exists()) {
-        this.router.navigate(['/ajoutMenu']);
-      }
-      else{
+        this.router.navigate(['/afficheMenu']);
+      } else {
         console.log('Utilisateur non trouvé dans la base de données.');
         this.router.navigate(['/login']);
       }
     } catch (error) {
-      console.log('Erreur d\'authentification');
-      // Ajoutez une logique pour afficher un message d'erreur à l'utilisateur
-      this.router.navigate(['/login']);
+      console.log('Erreur d\'authentification :', error);
+      throw new Error('Erreur d\'authentification. Veuillez vérifier vos informations d\'identification.');
     }
   }
 
 
 
-
-
-
-
-
-
-
   //methode deconnexion
-  logout(){
-    this.fireAuth.signOut().then(()=>{
+  logout() {
+    this.fireAuth.signOut().then(() => {
+      // Effacer le token ou effectuer d'autres opérations nécessaires
       localStorage.removeItem("token");
+
+      // Rediriger vers la page de login
       this.router.navigate(["/login"]);
-    },err=>{
+    }).catch((err) => {
       alert(err.message);
-    })
+    });
   }
 
   register(email:string,passe:string){
@@ -79,6 +65,12 @@ export class AuthentificationService {
       alert(err.message);
       this.router.navigate(["/ajouterRestaurent"]);
     })
+  }
+
+  getToken(): string | null {
+    // Ajoutez la logique pour récupérer le jeton d'authentification
+    // par exemple, si vous stockez le jeton dans le localStorage :
+    return localStorage.getItem('token');
   }
 
 

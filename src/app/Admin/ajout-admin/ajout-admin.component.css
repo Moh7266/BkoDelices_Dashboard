@@ -10,7 +10,7 @@
   justify-content: space-between;
 }
 .menu{
-  width: 23%;
+  width: 18%;
   padding: auto;
   padding-bottom: 1em;
   text-align: center;
@@ -18,13 +18,13 @@
   height: auto;
   border-top-left-radius: 15px;
   /* border-top-right-radius: 15px; */
-  box-shadow: 0px 0px 5px 1px #888888;
+  box-shadow: 0px 0px 5px 1px #888881;
 
 }
 .centre{
-  width: 55%;
-  margin-left: -1%;
-
+  width: 58%;
+  margin-left: -3%;
+  /* background-color: #ff8000; */
 }
 .droite{
   width: 25%;
@@ -34,7 +34,7 @@
 .menu .profil img{
   width: 7em;
   border-radius: 50%;
-  border: 2px solid #ff8000;
+  /* border: 2px solid #ff8000; */
   margin-top: 0.2em;
 }
 .menu .profil{
@@ -47,44 +47,49 @@
  margin:auto;
 }
 .option{
-   display: flex;
-   justify-content: space-between;
-   padding-left: 1em;
-   padding-right: 1em;
-   color: #ff8000;
-   font-size: large;
-   margin-top: 1em;
+  color: #ff8000;
+  font-size: large;
 }
 .option .option1 img{
   text-align: center;
-  width: 5em;
+  width:  2em;
+  height: 2em;
+  margin-left: 0.5em;
 }
 .option .option2 img{
-  width: 5em;
+  width: 2em;
+  height: 2em;
+  margin-left: 0.5em;
+
   text-align: center;
 
 }
 .option .option1,.option2{
-  border-radius: 5px;
-  box-shadow: 0px 0px 5px 1px #888888;
-  padding: 0.3em;
+  display: flex;
+  margin-top: 1.5em;
+  align-items: center;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
   text-align: center;
-  height: 6.7em;
-  width: 6.7em;
+  height: 2.5em;
+  width: 90%;
 }
 .option .option1:hover,.option2:hover{
   background-color: #8888884b;
   cursor: pointer;
 }
+.option .option1 h5,.option2 h5{
+  margin-left: 2em;
+}
 .upbar{
   width: 98%;
-  height: 15vh;
+  height: 10vh;
   box-shadow: 0px 0px 5px 1px #888888;
   border-top-right-radius: 15px;
   border-bottom-right-radius: 15px;
   text-align: center;
   color: #ff8000;
-  padding-top: 1.5em;
+  padding-top: 1em;
 }
 .form{
   text-align: center;
@@ -119,7 +124,51 @@
   border-top-right-radius: 15px;
   border-top-left-radius: 15px;
   box-shadow: 0px 0px 5px 1px #888888;
+}
 
 
+.deconnexion button{
+  margin-top: 10em;
+  width: 20vh;
+  height: 4vh;
+  background-color: red;
+  color: #fff;
+  border-radius: 15px;
+  border: none;
+  font-weight: bolder;
+  font-size: 1.1em;
+  cursor: pointer;
+}
+.deconnexion button:hover{
+  color: #D9D9D9;
+}
+
+
+.loading-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.8);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+}
+
+.loading-indicator::after {
+  content: '';
+  width: 50px;
+  height: 50px;
+  border: 5px solid #3498db;
+  border-radius: 50%;
+  border-top: 5px solid #fff;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 

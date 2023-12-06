@@ -10,16 +10,14 @@
   justify-content: space-between;
 }
 .menu{
-  width: 23%;
+  width: 18%;
   padding: auto;
   padding-bottom: 1em;
   text-align: center;
   background-color: #FFF;
   height: auto;
   border-top-left-radius: 15px;
-  /* border-top-right-radius: 15px; */
-  box-shadow: 0px 0px 5px 1px #888888;
-
+  box-shadow: 0px 0px 5px 1px #888881;
 }
 .left{
   /* border: 1px solid black; */
@@ -39,53 +37,49 @@
 }
 .upbar{
   width: 98%;
-  height: 15vh;
-  box-shadow: 0px 0px 5px 1px #888888;
+  height: 10vh;
+  box-shadow: 0px 0px 5px 1px #88888881;
   border-top-right-radius: 15px;
   border-bottom-right-radius: 15px;
   text-align: center;
   color: #ff8000;
-  padding-top: 1.5em;
+  padding-top: 1em;
 }
 .afiche{
-  /* border: 1px solid black; */
   display: grid;
-  grid-template-columns: auto auto auto;
-  /* background-color: #2196F3; */
-  /* padding: 10px; */
+  grid-template-columns: auto auto auto auto;
   width: 96%;
-  height: 75vh ;
-  margin-top: 11vh;
-  margin-left: 3vw;
+  height: 30em ;
+  margin-top: 5vh;
+  margin-left: 5vw;
 }
 .detail{
   /* border-bottom: 1px solid; */
   text-align: center;
 }
 .carte{
-  /* border: 1px solid black; */
-
   width: 75%;
-  /* height: 32vh; */
-  margin-bottom: 1em;
+  height: 10em;
+  margin-bottom: -0.1em;
   border-radius: 15px;
-  box-shadow: 0px 0px 3px 0px #888888;
+  box-shadow: 0px 0px 3px 0px #88888881;
   text-align: center;
 
 }
 .carte:hover{
-  background-color: #88888846;
+  background-color: #88888881;
   cursor: pointer;
 }
 .image img{
-  width: 85%;
-  margin-top: 0.1em;
+  width: 20vh;
+  height: 20vh;
+  margin-top: 0.2em;
 }
 
 .menu .profil img{
   width: 7em;
   border-radius: 50%;
-  border: 2px solid #ff8000;
+  /* border: 2px solid #ff8000; */
   margin-top: 0.2em;
 }
 .menu .profil{
@@ -98,37 +92,94 @@
  margin:auto;
 }
 .option{
-   display: flex;
-   justify-content: space-between;
-   padding-left: 1em;
-   padding-right: 1em;
-   color: #ff8000;
-   font-size: large;
-   margin-top: 1em;
+  color: #ff8000;
+  font-size: large;
 }
 .option .option1 img{
   text-align: center;
-  width: 5em;
+  width:  2em;
+  height: 2em;
+  margin-left: 0.5em;
 }
 .option .option2 img{
-  width: 5em;
+  width: 2em;
+  height: 2em;
+  margin-left: 0.5em;
+
   text-align: center;
 
 }
 .option .option1,.option2{
-  border-radius: 5px;
-  box-shadow: 0px 0px 5px 1px #888888;
-  padding: 0.3em;
+  display: flex;
+  margin-top: 1.5em;
+  align-items: center;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
   text-align: center;
-  height: 6.7em;
-  width: 6.7em;
+  height: 2.5em;
+  width: 90%;
 }
 .option .option1:hover,.option2:hover{
   background-color: #8888884b;
   cursor: pointer;
 }
+.option .option1 h5,.option2 h5{
+  margin-left: 2em;
+}
 .centre{
-  width: 55%;
-  margin-left: -1%;
+  width: 58%;
+  margin-left: -3%;
+  /* background-color: #ff8000; */
 
+}
+
+.datailimg{
+  width: 100%;
+}
+.datailimg img{
+  width: 15vh;
+  margin: 0.5em;
+}
+
+.detailA button{
+  border: none;
+  border-radius: 5px;
+  padding: 0.2em;
+  color: #FFF;
+  width: 8em;
+  height: 2em;
+}
+.detailA h2{
+  color: #ff8000;
+  font-weight: bold;
+  text-decoration: underline;
+  margin-top: 1em;
+  margin-bottom:1em;
+}
+.detailA h1{
+  color: #ff8000;
+  font-weight: bold;
+}
+.action{
+  display: flex;
+  justify-content: space-between;
+  margin-left:2em;
+  margin-right:2em;
+  margin-top: 2em;
+}
+
+.deconnexion button{
+  margin-top: 10em;
+  width: 20vh;
+  height: 4vh;
+  background-color: red;
+  color: #fff;
+  border-radius: 15px;
+  border: none;
+  font-weight: bolder;
+  font-size: 1.1em;
+  cursor: pointer;
+}
+.deconnexion button:hover{
+  color: #D9D9D9;
 }

@@ -1,30 +1,48 @@
-import { Component } from '@angular/core';
-
-import { Firestore, collection, collectionData, doc, getDocs, query, setDoc, where } from '@angular/fire/firestore';
+import { Component, OnInit } from '@angular/core';
+import { Firestore, addDoc, collection, collectionData, doc, getDocs, query, setDoc, where } from '@angular/fire/firestore';
 import { NgForm } from '@angular/forms';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { getDownloadURL, getStorage, ref, uploadBytes } from '@angular/fire/storage';
 import { Router } from '@angular/router';
-
-
+import { first } from 'rxjs/operators';
+import { UserInfo } from 'src/app/services/user';
+import { CurrentUserService } from 'src/app/services/current-user.service';
+import { AuthentificationService } from 'src/app/services/authentification.service';
 
 @Component({
   selector: 'app-ajout-plat',
   templateUrl: './ajout-plat.component.html',
   styleUrls: ['./ajout-plat.component.css']
 })
-export class AjoutPlatComponent {
-
-
+export class AjoutPlatComponent implements OnInit {
+  userInfo: UserInfo | undefined;
   selectedFile: File | null = null;
-
-  Type!:any
+  Type!: any;
   data: any = {};
+  loading = false;
 
   constructor(
     private firestore: Firestore,
     private router: Router,
-  ) { this.GetType()}
+    private auth: AngularFireAuth,
+    private authentification:AuthentificationService,
+
+    private currentUserService: CurrentUserService
+  ) {
+    this.getType();
+  }
+
+  ngOnInit(): void {
+    this.getCurrentUser();
+    console.log(this.userInfo);
+  }
+
+  async getCurrentUser(): Promise<void> {
+    this.currentUserService.getUserInfo().then((result) => {
+      this.userInfo = result as unknown as UserInfo;
+      console.log(this.userInfo);
+    });
+  }
 
   onChange(event: any) {
     this.selectedFile = event.target.files[0];
@@ -38,69 +56,81 @@ export class AjoutPlatComponent {
   }
 
   async addPlat(admin: NgForm) {
-    const data = admin.value;
-    console.log(data)
-    const platName = data.nom;
+    try {
+      this.loading = true;
+      const data = admin.value;
+      const platName = data.nom;
 
+      // Verify if the plat already exists
+      const platExists = await this.platExists(platName);
 
-    // Vérifier si le type existe déjà
-    const typeExists = await this.platExists(platName);
+      if (platExists) {
+        alert('Ce plat existe déjà.');
+        this.loading = false;
+        // Add logic for handling the case where the plat already exists
+        return;
+      }
 
-    if (typeExists) {
-      alert('Ce plat existe déjà.');
-      // Ajouter ici la logique pour gérer le cas où le type existe déjà
-      return;
-    }
+      // Get the current user's ID
+      const user = await this.auth.authState.pipe(first()).toPromise();
+      const restaurant = user ? user : null; // Replace this line with your logic if user is null
+      data.restaurantId = restaurant?.uid;
 
-    // Si le type n'existe pas, ajoutez-le à Firestore
-    const collectionInstance = collection(this.firestore, 'plats');
-    const typeDocRef = doc(collectionInstance, platName);
+      // Add the plat data to Firestore without the image URL
+      const collectionInstance = collection(this.firestore, 'plats');
+      const docRef = await addDoc(collectionInstance, data);
 
-    setDoc(typeDocRef, data, { merge: true }).then(() => {
-      const path = `images/${platName}`;
+      // Define the path for storing the image in Firebase Storage
+      const path = `images/${docRef.id}`;
+      const storageRef = ref(getStorage(), path);
+
+      // Upload the image to Firebase Storage
+      const newMetadata = {
+        contentType: this.selectedFile?.type
+      };
 
       if (this.selectedFile) {
-        const storage = getStorage();
-        const newMetadata = {
-          contentType: this.selectedFile.type
-        };
-        const storageRef = ref(storage, path);
-
-        // Télécharger l'image associée après avoir ajouté le type
-        uploadBytes(storageRef, this.selectedFile, newMetadata).then((snapshot) => {
-          console.log(snapshot.ref.fullPath);
-          console.log('plat ajouter!!!!!!!!!!!!!!!!!!');
-
-          this.router.navigate(['/affichePlat']);
-        }).catch((err) => {
-          console.log(err);
-        });
-      } else {
-        // Si aucun fichier n'est sélectionné, simplement rediriger
-        this.router.navigate(['/affichePlat']);
+        // Use the correct uploadBytes method
+        const snapshot = await uploadBytes(storageRef, this.selectedFile as Blob, newMetadata);
       }
-    }).catch((err) => {
+
+      // Get the download URL of the uploaded image
+      const imageUrl = this.selectedFile ? await getDownloadURL(storageRef) : null;
+
+      // Update the plat document in Firestore with the image URL
+      if (imageUrl) {
+        await setDoc(doc(collectionInstance, docRef.id), { imageUrl: imageUrl }, { merge: true });
+      }
+
+      console.log('Plat ajouté avec succès!');
+      this.router.navigate(['/affichePlat']);
+    } catch (err) {
       console.log(err);
-    });
+    } finally {
+      this.loading = false;
+    }
+  }
+
+  // recuperation des types de plats
+  getType() {
+    const collectionInstance = collection(this.firestore, 'type');
+    collectionData(collectionInstance, { idField: 'id' })
+      .subscribe(val => {
+        val.forEach((element) => {
+          const storage = getStorage();
+          const starsRef = ref(storage, 'images/' + element.id);
+          getDownloadURL(starsRef)
+            .then((url) => {
+              element['fileInput'] = url;
+            });
+        });
+        console.log(val);
+        this.Type = val;
+      });
   }
 
 
-
-  // recuperation des type de plats
-  GetType(){
-    const collectionInstance= collection(this.firestore, 'type');
-    collectionData(collectionInstance, {idField:'id'})
-    .subscribe(val=>{
-      val.forEach((element)=>{
-    const storage = getStorage();
-    const starsRef =    ref(storage, 'images/'+element.id);
-    getDownloadURL(starsRef)
-    .then((url) => {
-      element['fileInput']=url
-    }) })
-      console.log(val);
-      this.Type = val;
-    });
-
-}
+  onLogout() {
+    this.authentification.logout();
+  }
 }

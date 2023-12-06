@@ -191,4 +191,31 @@ border: 2px solid #ff8000;
 .contain:hover{
   background-color: #88888859;
 }
+.dropdown{
 
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff; /* Ajoutez un fond blanc ou la couleur souhaitée */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Ajoutez une ombre légère */
+  padding: 10px;
+  border-radius: 5px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column; /* Affiche les éléments de haut en bas */
+  align-items: center;
+  width: 50%;
+
+}
+
+.dropdown button {
+  display: block;
+  width: 25%;
+  padding: 8px;
+  margin-bottom: 5px;
+  text-align: center;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}

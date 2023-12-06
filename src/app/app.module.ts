@@ -30,6 +30,8 @@ import { AfficheMenuComponent } from './Restaurant/Menu/affiche-menu/affiche-men
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from "primeng/button";
 import { PopupAdminComponent } from './composants/popup-admin/popup-admin.component';
+import { AuthentificationService } from './services/authentification.service';
+import { CommandeComponent } from './Restaurant/commande/commande.component';
 
 
 @NgModule({
@@ -49,6 +51,7 @@ import { PopupAdminComponent } from './composants/popup-admin/popup-admin.compon
     AjoutMenuComponent,
     AfficheMenuComponent,
     PopupAdminComponent,
+    CommandeComponent,
   ],
   imports: [
     BrowserModule,
@@ -61,7 +64,7 @@ import { PopupAdminComponent } from './composants/popup-admin/popup-admin.compon
     DialogModule,
     ButtonModule
   ],
-  providers: [],
+  providers: [AuthentificationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

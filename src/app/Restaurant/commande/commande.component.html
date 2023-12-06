@@ -58,18 +58,18 @@
   <div class="centre">
     <div class="upbar">
 <!-- Le titre de la page  -->
-      <h1>Liste des types de plats</h1>
+      <h1>Commandes reçu</h1>
     </div>
 <!-- Les cartes  -->
     <div class="afiche" >
     <!--  -->
-      <div class="carte" *ngFor=" let data of Type " (click)="showRestauDetails(data)">
+      <div class="carte"  *ngFor=" let data of Commandes ">
         <div class="image">
           <!-- recuperer l'image dans firestorage et le mettre ici -->
           <img [src]="data.fileInput" alt="image du restaurant">
         </div>
         <div class="titre">
-          <h3>{{data.nom}}</h3>
+          <h3>{{data.montant}}</h3>
         </div>
       </div>
     <!--  -->
@@ -80,15 +80,33 @@
   <!-- la partie details  -->
   <div class="droite">
     <div class="detail">
-      <h1>
-      Plus de details
-      </h1>
+      <h2>
+      Details de la commande
+      </h2>
       <hr><hr><hr>
-      <div class="detailA" *ngIf="Type">
-        <h1>{{Type.nom}}</h1>
+      <div class="detailA">
+        <div class="datailimg">
+        <img alt="image du restaurant">
+
+        </div>
+        <h1></h1>
+
+        <hr><hr>
+
+        <h1>Les plats du menu :</h1>
+        <div>
+            <h3></h3>
+
+        </div>
+
+        <div class="action">
+        <button  style="background-color: red;">Supprimer</button>
+        <button style="background-color: #ff8000;">Modifier</button>
+        </div>
+
       </div>
-    </div>
+    <!-- </div> -->
 
-  </div>
+  <!-- </div> -->
 
-</div>
+<!-- </div> -->

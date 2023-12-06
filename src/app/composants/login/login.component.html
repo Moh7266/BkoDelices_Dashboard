@@ -12,8 +12,10 @@
     <img src="../../../assets/images/couteau.png" alt="">
     <div class="forme">
       <form>
+
+        
         <div class="first">
-          <label for="identifient" class="label">Identifient</label><br>
+          <label for="identifient" class="label">Email</label><br>
           <input type="text" name="identifient" id="identifient" [(ngModel)]="email">
         </div>
         <div class="second">
@@ -22,8 +24,8 @@
           <span>Mot de passe oublié</span>
         </div>
         <input type="submit" name="connexion" id="connexion" value="Se connecter" (click)="login()">
-        <p class="ou">Ou</p>
-        <p class="para" style="font-size: medium;">Se connecter avec <img src="../../../assets/images/google.png" alt=""></p>
+        <!-- <p class="ou">Ou</p>
+        <p class="para" style="font-size: medium;">Se connecter avec <img src="../../../assets/images/google.png" alt=""></p> -->
 
       </form>
     </div>

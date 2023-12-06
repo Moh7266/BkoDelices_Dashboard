@@ -1,70 +1,44 @@
 <app-header-admin></app-header-admin>
     <!-- titre de la page  -->
     <div class="principal">
-      <div class="menu" style="z-index: 6;">
-        <div class="profil">
-          <img src="../../../assets/images/profil (2).png" alt="">
-          <h3>Nom complet de Supper-Admin</h3>
+
+  <div class="menu" style="z-index: 6;">
+    <div class="profil">
+      <img [src]="adminInfo?.imageUrl">
+      <h3>{{adminInfo?.nom}}</h3>
+    </div>
+    <div class="trait"></div>
+    <div class="onglets">
+      <div class="option" >
+        <div class="option1" routerLink="/afficheRestaurant">
+          <img src="../../../assets/images/acceuil.png" alt="">
+          <h5>Restaurants</h5>
         </div>
-        <div class="trait"></div>
-        <div class="onglets">
-          <div class="option">
-            <div class="option1">
-              <img src="../../../assets/images/acceuil.png" alt="">
-              <h5>Acceuil</h5>
-            </div>
-            <div class="option2">
-              <img src="../../../assets/images/profil (2).png" alt="">
-              <h5>Supper-Admin</h5>
-            </div>
-          </div>
+        <div class="option2" routerLink="/listeAdmin" style="background-color: #d5d5d5;">
+          <img src="../../../assets/images/profil (2).png" alt="">
+          <h5 style="margin-left: 1.8em;">Supper-Admin</h5>
+        </div>
 
-          <div class="option">
-            <div class="option1">
-              <img src="../../../assets/images/menu.png" alt="">
-              <h5>Menus</h5>
-            </div>
-            <div class="option2">
-              <img src="../../../assets/images/plat.png" alt="">
-              <h5>Types plats</h5>
-            </div>
-          </div>
+      </div>
 
-          <div class="option">
-            <div class="option1">
-              <img src="../../../assets/images/1262762.png" alt="">
-              <h5>Plats</h5>
-            </div>
-            <div class="option2">
-              <img src="../../../assets/images/sta.png" alt="">
-              <h5>Statistiques</h5>
-            </div>
-          </div>
+      <div class="option">
+        <div class="option2">
+          <img src="../../../assets/images/sta.png" alt="">
+          <h5>Statistiques</h5>
+        </div>
 
-          <!-- <div class="option">
-            <div class="option1">
-              <img src="../../../assets/images/acceuil.png" alt="">
-              <h4>Acceuil</h4>
-            </div>
-            <div class="option2">
-              <img src="../../../assets/images/acceuil.png" alt="">
-              <h4>Acceuil</h4>
-            </div>
-          </div> -->
-
-          <div class="option">
-            <div class="option1">
-              <img src="../../../assets/images/tel.png" alt="">
-              <h4>Contacts</h4>
-            </div>
-            <!-- <div class="option2">
-              <img src="../../../assets/images/acceuil.png" alt="">
-              <h4>Acceuil</h4>
-            </div> -->
-          </div>
-
+        <div class="option1">
+          <img src="../../../assets/images/tel.png" alt="">
+          <h5>Contacts</h5>
         </div>
       </div>
+
+      <div class="deconnexion">
+        <button (click)="onLogout()">Déconnexion</button>
+      </div>
+
+    </div>
+  </div>
 
       <div class="centre">
         <div class="upbar" >
@@ -74,6 +48,10 @@
     <!-- Les cartes  -->
 
         <!--  -->
+        <div *ngIf="loading" class="loading-indicator">
+          <!-- Ajoutez ici votre indicateur de chargement (cercle tournant) -->
+          Enregistrement du restaurant en cours...
+        </div>
           <div class="form">
             <form #admin="ngForm" (ngSubmit)="addAdmin(admin)">
               <!-- ====================================== -->
@@ -85,6 +63,7 @@
                     <img src="../../../assets/images/pen.png" alt="">
                   </button>
               </div> -->
+              <label for="Photo">Photo de l'admin</label><br>
               <input #inputField ="ngModel" name="fileInput" ngModel type="file"  accept="image/*" (change)="onChange($event)"
               style="margin-bottom: 2em;">
             <!-- ======================================= -->

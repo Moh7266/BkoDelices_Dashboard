@@ -1,11 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
-import { Firestore, collection, collectionData, doc, getDocs, query, setDoc, where } from '@angular/fire/firestore';
+import { Firestore, addDoc, collection, collectionData, doc, getDocs, query, setDoc, updateDoc, where } from '@angular/fire/firestore';
 
 import { NgForm } from '@angular/forms';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { getDownloadURL, getStorage, ref, uploadBytes } from '@angular/fire/storage';
 import { Router } from '@angular/router';
+import { CurrentUserService } from 'src/app/services/current-user.service';
+import { UserInfo } from 'src/app/services/user';
+import { AuthentificationService } from 'src/app/services/authentification.service';
+
+
 
 
 
@@ -14,26 +19,47 @@ import { Router } from '@angular/router';
   templateUrl: './ajout-menu.component.html',
   styleUrls: ['./ajout-menu.component.css']
 })
-export class AjoutMenuComponent {
+export class AjoutMenuComponent implements OnInit{
 
 
 
   selectedFile: File | null = null;
   Plat!:any
   data: any = { plats: []};
+  userInfo: UserInfo | undefined;
+
 
 
   constructor(
     private firestore:Firestore,
     private fireauth:AngularFireAuth,
     private router:Router,
+    private authentification:AuthentificationService,
+
+    private currentUserService: CurrentUserService
     ){this.GetPlat()}
+
+  ngOnInit(): void {
+    this.getCurrentUser();
+    console.log(this.userInfo);
+
+
+   }
+
+   async getCurrentUser(): Promise<void> {
+    this.currentUserService.getUserInfo().then((result)=>{
+      this.userInfo = result as unknown as UserInfo;
+      console.log(this.userInfo);
+    });
+
+  }
 
     onChange(event:any){
 
       this.selectedFile=event.target.files[0];
 
     }
+
 
     async menuExists(menuName: string): Promise<boolean> {
       const typeCollection = collection(this.firestore, 'Menus');
@@ -60,66 +86,61 @@ export class AjoutMenuComponent {
       }
     }
 
-
-
     async addMenu(admin: NgForm) {
-      const data = admin.value;
-      console.log(data)
-      const menuName = data.nom;
+      try {
+        const data = admin.value;
+        const menuName = data.nom;
 
-      // Remplacez 'ID_DU_RESTAURANT' par l'ID réel de votre restaurant
-      const restaurantId = await this.getRestaurantId();
-      if (restaurantId) {
-        // Continuer avec l'ID du restaurant
-        console.log('ID du restaurant :', restaurantId);
+        // Remplacez 'ID_DU_RESTAURANT' par l'ID réel de votre restaurant
+        const restaurantId = await this.getRestaurantId();
+        if (!restaurantId) {
+          // Gérer le cas où aucun utilisateur n'est connecté
+          console.log("Aucun utilisateur connecté");
+          return;
+        }
 
-        // ... le reste du code ...
-      } else {
-        // Gérer le cas où aucun utilisateur n'est connecté
-        console.log("Aucun utilisateur connecté");
-        return;
-      }
+        // Vérifier si le menu existe déjà
+        const menuExists = await this.menuExists(menuName);
 
-      // Vérifier si le menu existe déjà
-      const menuExists = await this.menuExists(menuName);
+        if (menuExists) {
+          alert('Ce menu existe déjà.');
+          // Ajouter ici la logique pour gérer le cas où le menu existe déjà
+          return;
+        }
 
-      if (menuExists) {
-        alert('Ce menu existe déjà.');
-        // Ajouter ici la logique pour gérer le cas où le menu existe déjà
-        return;
-      }
+        // Ajoutez le menu à la sous-collection 'Menus' de la collection 'restaurant'
+        const restaurantCollection = collection(this.firestore, 'restaurants', restaurantId, 'Menus');
 
-      // Ajoutez le menu à la sous-collection 'Menus' de la collection 'restaurant'
-      const restaurantCollection = collection(this.firestore, 'restaurants', restaurantId, 'Menus');
-      const menuDocRef = doc(restaurantCollection, menuName);
+        // Utilisez la méthode add pour générer automatiquement l'ID
+        const menuDocRef = await addDoc(restaurantCollection, data);
 
-      setDoc(menuDocRef, data, { merge: true }).then(() => {
-        const path = `images/${menuName}`;
-
+        // Vérifier si une image est sélectionnée
         if (this.selectedFile) {
           const storage = getStorage();
+          const path = `images/${menuDocRef.id}`;
           const newMetadata = {
             contentType: this.selectedFile.type
           };
           const storageRef = ref(storage, path);
 
-          // Télécharger l'image associée après avoir ajouté le menu
-          uploadBytes(storageRef, this.selectedFile, newMetadata).then((snapshot) => {
-            console.log(snapshot.ref.fullPath);
-            console.log('Menu ajouté avec succès!');
+          // Télécharger l'image associée et obtenir son URL
+          const snapshot = await uploadBytes(storageRef, this.selectedFile, newMetadata);
+          const imageUrl = await getDownloadURL(snapshot.ref);
 
-            this.router.navigate(['/afficheMenu']);
-          }).catch((err) => {
-            console.log(err);
-          });
+          // Ajouter l'URL de l'image aux données du menu
+          await updateDoc(menuDocRef, { imageUrl: imageUrl });
+
+          console.log('Menu ajouté avec succès!');
+          this.router.navigate(['/afficheMenu']);
         } else {
-          // Si aucun fichier n'est sélectionné, simplement rediriger
+          // Si aucune image n'est sélectionnée, simplement rediriger
           this.router.navigate(['/afficheMenu']);
         }
-      }).catch((err) => {
+      } catch (err) {
         console.log(err);
-      });
+      }
     }
+
 
 
     GetPlat(){
@@ -132,11 +153,16 @@ export class AjoutMenuComponent {
       getDownloadURL(starsRef)
       .then((url) => {
         element['fileInput']=url
+
       }) })
         console.log(val);
         this.Plat = val;
       });
 
+  }
+
+  onLogout() {
+    this.authentification.logout();
   }
 
 

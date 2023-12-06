@@ -19,7 +19,14 @@
     <!-- bouton ajout  -->
 
     <div class="ajout">
-      <button class="Ajouter">Ajouter +</button>
+      <button class="Ajouter"  (click)="toggleDropdown()">Ajouter +</button>
+
+      <div *ngIf="showDropdown" class="dropdown">
+        <button (click)="handleOption1()">Type de plat</button>
+        <button (click)="handleOption2()">Plat</button>
+        <button (click)="handleOption3()">Menu</button>
+        <button (click)="handleOption4()">Evennement</button>
+      </div>
     </div>
   </div>
 </header>

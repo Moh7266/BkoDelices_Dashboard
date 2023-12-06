@@ -1,22 +1,42 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Firestore, collection, doc, setDoc, getDocs, query, where } from '@angular/fire/firestore';
 import { getStorage, ref, uploadBytes } from '@angular/fire/storage';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
+import { UserInfo } from 'src/app/services/user';
+import { CurrentUserService } from 'src/app/services/current-user.service';
+import { AuthentificationService } from 'src/app/services/authentification.service';
 
 @Component({
   selector: 'app-ajout-type',
   templateUrl: './ajout-type.component.html',
   styleUrls: ['./ajout-type.component.css']
 })
-export class AjoutTypeComponent {
+export class AjoutTypeComponent implements OnInit {
 
+  userInfo: UserInfo | undefined;
   selectedFile: File | null = null;
 
   constructor(
     private firestore: Firestore,
     private router: Router,
+    private authentification:AuthentificationService,
+
+    private currentUserService: CurrentUserService,
+
   ) {}
+  ngOnInit(): void {
+    this.getCurrentUser();
+    console.log(this.userInfo);
+  }
+
+  async getCurrentUser(): Promise<void> {
+    this.currentUserService.getUserInfo().then((result)=>{
+      this.userInfo = result as unknown as UserInfo;
+      console.log(this.userInfo);
+    });
+
+  }
 
   onChange(event: any) {
     this.selectedFile = event.target.files[0];
@@ -72,5 +92,10 @@ export class AjoutTypeComponent {
     }).catch((err) => {
       console.log(err);
     });
+  }
+
+
+  onLogout() {
+    this.authentification.logout();
   }
 }

@@ -12,16 +12,18 @@ import { AjoutPlatComponent } from './Restaurant/Plat/ajout-plat/ajout-plat.comp
 import { AffichePlatComponent } from './Restaurant/Plat/affiche-plat/affiche-plat.component';
 import { AjoutMenuComponent } from './Restaurant/Menu/ajout-menu/ajout-menu.component';
 import { AfficheMenuComponent } from './Restaurant/Menu/affiche-menu/affiche-menu.component';
+import { CommandeComponent } from './Restaurant/commande/commande.component';
 
 const routes: Routes = [
   {path:"",component:LoginComponent},
+  {path:"login",component:LoginComponent},
 
 
   {path:"headers", component:AfficheRestaurantComponent},
   {path:"ajoutRestaurant",component:AjoutRestaurantComponent},
   {path:"afficheRestaurant",component:AfficheRestaurantComponent},
   {path:"ajoutAdmin",component:AjoutAdminComponent},
-  {path:"listeAdmin", component:AfficheAdminComponent},
+  {path:"afficheAdmin", component:AfficheAdminComponent},
   {path:"header",component:HeaderAdminComponent},
 
 
@@ -30,7 +32,8 @@ const routes: Routes = [
   {path:"ajoutPlat", component:AjoutPlatComponent},
   {path:"affichePlat",component:AffichePlatComponent},
   {path:"ajoutMenu", component:AjoutMenuComponent},
-  {path:"afficheMenu",component:AfficheMenuComponent}
+  {path:"afficheMenu",component:AfficheMenuComponent},
+  {path:"mesCommandes",component:CommandeComponent}
 
 ];
 
